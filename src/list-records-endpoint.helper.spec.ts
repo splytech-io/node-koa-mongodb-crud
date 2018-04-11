@@ -1,5 +1,6 @@
 import { expect } from 'chai';
 import { ListRecordsEndpointHelper } from './list-records-endpoint.helper';
+import { createCollection } from './test-helpers';
 
 describe('list-records-endpoint.helper', () => {
 
@@ -156,4 +157,20 @@ describe('list-records-endpoint.helper', () => {
     });
   });
 
+  describe('.exec()', () => {
+
+    it('should return right values', async () => {
+      const collection = createCollection();
+      const result = await ListRecordsEndpointHelper.exec(collection, {
+        forceFilter: { date: '2017' },
+        cast: { date: Date },
+      });
+
+      expect(result.count).to.equals(3);
+      expect(result.records.length).to.equals(3);
+      expect(result.filter).to.deep.equals({
+        date: new Date('2017'),
+      });
+    });
+  });
 });

@@ -4,9 +4,9 @@ import { ObjectID } from 'bson';
 import { Schema } from 'joi';
 import { ResourceHelpers } from '../helpers';
 import { J } from '../joi';
+import { MyRequestValidation } from '../request-validation';
 import { ResourceError } from '../resource-error';
-import { Collection } from '../types';
-import Application = require('koa');
+import { Collection, Context, Middleware } from '../types';
 
 export namespace PutResource {
 
@@ -28,9 +28,9 @@ export namespace PutResource {
    *
    * @param {Collection} collection
    * @param {PutResource.Options} options
-   * @returns {(ctx: Application.Context) => Promise<void>}
+   * @returns {Middleware}
    */
-  export function create(collection: Collection, options: Options) {
+  export function create(collection: Collection, options: Options): Middleware {
     const validation: RequestValidation.Rules = {
       params: J.object({
         id: J.objectId(),
@@ -38,8 +38,8 @@ export namespace PutResource {
       body: <any>options.validation,
     };
 
-    return async (ctx: Application.Context) => {
-      const request = RequestValidation.validate<Request>(ctx, validation);
+    return async (ctx: Context) => {
+      const request = MyRequestValidation.validate<Request>(ctx, validation);
       const body = castDocument(request.body, options.cast);
 
       const result = await collection.updateOne({

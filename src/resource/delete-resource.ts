@@ -1,9 +1,9 @@
 import { RequestValidation } from '@splytech-io/request-validation';
 import { ObjectID } from 'bson';
 import { J } from '../joi';
+import { MyRequestValidation } from '../request-validation';
 import { ResourceError } from '../resource-error';
-import { Collection } from '../types';
-import Application = require('koa');
+import { Collection, Context, Middleware } from '../types';
 
 export namespace DeleteResource {
 
@@ -13,15 +13,23 @@ export namespace DeleteResource {
     };
   }
 
-  export function create(collection: Collection) {
+  /**
+   *
+   * @param {Collection} collection
+   * @returns {Middleware}
+   */
+  export function create(collection: Collection): Middleware {
     const validation: RequestValidation.Rules = {
       params: J.object({
         id: J.objectId(),
       }),
     };
 
-    return async (ctx: Application.Context) => {
-      const { params } = RequestValidation.validate<Request>(ctx, validation);
+    /**
+     *
+     */
+    return async (ctx: Context) => {
+      const { params } = MyRequestValidation.validate<Request>(ctx, validation);
 
       const result = await collection.deleteOne({
         '_id': new ObjectID(params.id),

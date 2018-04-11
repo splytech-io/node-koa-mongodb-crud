@@ -3,8 +3,8 @@ import { RequestValidation } from '@splytech-io/request-validation';
 import { ObjectID } from 'bson';
 import { Schema } from 'joi';
 import { ResourceHelpers } from '../helpers';
-import { Collection } from '../types';
-import Application = require('koa');
+import { MyRequestValidation } from '../request-validation';
+import { Collection, Context, Middleware } from '../types';
 
 export namespace PostResource {
   export interface Request {
@@ -20,17 +20,17 @@ export namespace PostResource {
 
   /**
    *
-   * @param {MongoDB.Collection} collection
+   * @param {Collection} collection
    * @param {PostResource.Options} options
-   * @returns {(ctx: Application.Context) => Promise<void>}
+   * @returns {Middleware}
    */
-  export function create(collection: Collection, options: Options) {
+  export function create(collection: Collection, options: Options): Middleware {
     const validation: RequestValidation.Rules = {
       body: <any>options.validation,
     };
 
-    return async (ctx: Application.Context) => {
-      const request = RequestValidation.validate<Request>(ctx, validation);
+    return async (ctx: Context) => {
+      const request = MyRequestValidation.validate<Request>(ctx, validation);
 
       if (options.additionalValidation) {
         options.additionalValidation(request);

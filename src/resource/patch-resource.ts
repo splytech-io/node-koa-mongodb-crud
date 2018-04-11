@@ -4,10 +4,10 @@ import { ObjectID } from 'bson';
 import { Schema } from 'joi';
 import { ResourceHelpers } from '../helpers';
 import { J } from '../joi';
+import { MyRequestValidation } from '../request-validation';
 import { ResourceError } from '../resource-error';
-import { Collection } from '../types';
+import { Collection, Context, Middleware } from '../types';
 import flatten = require('flat');
-import Application = require('koa');
 
 export namespace PatchResource {
 
@@ -23,7 +23,13 @@ export namespace PatchResource {
     validation: Schema;
   }
 
-  export function create(collection: Collection, options: Options) {
+  /**
+   *
+   * @param {Collection} collection
+   * @param {PatchResource.Options} options
+   * @returns {Middleware}
+   */
+  export function create(collection: Collection, options: Options): Middleware {
     const validation: RequestValidation.Rules = {
       params: J.object({
         id: J.objectId(),
@@ -31,8 +37,11 @@ export namespace PatchResource {
       body: <any>options.validation,
     };
 
-    return async (ctx: Application.Context) => {
-      const request = RequestValidation.validate<Request>(ctx, validation, {
+    /**
+     *
+     */
+    return async (ctx: Context) => {
+      const request = MyRequestValidation.validate<Request>(ctx, validation, {
         body: {
           presence: 'optional',
         },

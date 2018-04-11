@@ -1,9 +1,9 @@
 import { RequestValidation } from '@splytech-io/request-validation';
 import { ObjectID } from 'bson';
 import { J } from '../joi';
+import { MyRequestValidation } from '../request-validation';
 import { ResourceError } from '../resource-error';
-import { Collection } from '../types';
-import Application = require('koa');
+import { Collection, Context, Middleware } from '../types';
 
 export namespace GetResource {
 
@@ -19,9 +19,14 @@ export namespace GetResource {
     }),
   };
 
-  export function create(collection: Collection) {
-    return async (ctx: Application.Context) => {
-      const { params } = RequestValidation.validate<Request>(ctx, validation);
+  /**
+   *
+   * @param {Collection} collection
+   * @returns {Middleware}
+   */
+  export function create(collection: Collection): Middleware {
+    return async (ctx: Context) => {
+      const { params } = MyRequestValidation.validate<Request>(ctx, validation);
 
       const record = await collection.findOne({
         '_id': new ObjectID(params.id),

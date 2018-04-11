@@ -1,6 +1,6 @@
 import { castFilter } from '@splytech-io/cast';
 import { RequestValidation } from '@splytech-io/request-validation';
-import * as J from 'joi';
+import { J } from './joi';
 import { Collection } from './types';
 
 export namespace ListRecordsEndpointHelper {

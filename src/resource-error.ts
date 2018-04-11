@@ -1,17 +1,75 @@
-export class ResourceError extends Error {
-  static NOT_FOUND = ResourceError.create('NOT_FOUND');
-  static DUPLICATE_RECORD = ResourceError.create('DUPLICATE_RECORD');
+export namespace ResourceError {
+  export const NOT_FOUND = create('NOT_FOUND');
+  export const DUPLICATE_RECORD = create('DUPLICATE_RECORD');
+  export const VALIDATION_FAILURE = create('VALIDATION_FAILURE');
 
-  static create(code: string) {
-    return class extends ResourceError {
-      code = code;
-      description?: string;
+  export interface Constructor {
+    new (description?: string, info?: any): Error;
 
-      constructor(description?: string) {
-        super(`Resource: ${code}: ${message}`);
+    code: () => string;
+  }
 
-        this.description = description;
+  /**
+   *
+   * @param {string} code
+   * @returns {ResourceError.Constructor}
+   */
+  function create(code: string): Constructor {
+    return <any>class {
+      constructor(...args: any[]) {
+        return new Error(code, ...args);
       }
+
+      static code() {
+        return code;
+      }
+    };
+  }
+
+  /**
+   *
+   * @param e
+   * @returns {boolean}
+   */
+  export function isError(e: any): boolean {
+    if (typeof e !== 'object') {
+      return false;
     }
+
+    return e.type === 'ResourceError';
+  }
+
+  /**
+   *
+   */
+  export class Error extends global.Error {
+    code: string;
+    description?: string;
+    info?: any;
+    type = 'ResourceError';
+
+    /**
+     *
+     * @param {string} code
+     * @param {string} description
+     */
+    constructor(code: string, description?: string) {
+      super(`ResourceError: ${code}`);
+
+      this.code = code;
+      this.description = description;
+    }
+
+    /**
+     *
+     * @param info
+     * @returns {this}
+     */
+    setInfo(info: any) {
+      this.info = info;
+
+      return this;
+    }
+
   }
 }

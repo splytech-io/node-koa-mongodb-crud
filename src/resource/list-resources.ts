@@ -1,7 +1,6 @@
-import { RequestValidation } from '@splytech-io/request-validation';
 import { ListRecordsEndpointHelper } from '../list-records-endpoint.helper';
-import { Collection } from '../types';
-import Application = require('koa');
+import { MyRequestValidation } from '../request-validation';
+import { Collection, Context, Middleware } from '../types';
 
 export namespace ListResources {
   export interface Options {
@@ -12,11 +11,11 @@ export namespace ListResources {
    *
    * @param {Collection} collection
    * @param {ListResources.Options} options
-   * @returns {(ctx: Application.Context) => Promise<void>}
+   * @returns {Middleware}
    */
-  export function create(collection: Collection, options: Options) {
-    return async (ctx: Application.Context) => {
-      const { query } = RequestValidation.validate<ListRecordsEndpointHelper.Request>(
+  export function create(collection: Collection, options: Options): Middleware {
+    return async (ctx: Context) => {
+      const { query } = MyRequestValidation.validate<ListRecordsEndpointHelper.Request>(
         ctx,
         ListRecordsEndpointHelper.validation,
       );
