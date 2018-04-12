@@ -37,9 +37,9 @@ export namespace ResourceError {
   export const VALIDATION_FAILURE = create('VALIDATION_FAILURE');
 
   export interface Constructor {
-    new (description?: string, info?: any): Error;
-
     code: () => string;
+
+    new(description?: string, info?: any): Error;
   }
 
   /**
@@ -57,7 +57,7 @@ export namespace ResourceError {
         return code;
       }
 
-      static [Symbol.hasInstance] (instance: any) {
+      static [Symbol.hasInstance](instance: any) {
         return instance instanceof Error && instance.code === code;
       }
     };

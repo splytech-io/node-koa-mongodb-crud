@@ -1,4 +1,3 @@
-import { RequestValidation } from '@splytech-io/request-validation';
 import { expect, use } from 'chai';
 import { ResourceError } from '../resource-error';
 import { createCollection, createContext } from '../test-helpers';
