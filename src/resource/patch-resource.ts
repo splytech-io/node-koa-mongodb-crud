@@ -34,7 +34,7 @@ export namespace PatchResource {
       params: J.object({
         id: J.objectId(),
       }),
-      body: <any>options.validation,
+      body: options.validation,
     };
 
     /**

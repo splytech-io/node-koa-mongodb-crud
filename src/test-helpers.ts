@@ -1,3 +1,4 @@
+import { ObjectID } from 'bson';
 import { Collection, Context } from './types';
 
 export interface ContextOptions {
@@ -11,7 +12,7 @@ export interface ContextOptions {
  * @returns {Collection}
  */
 export function createCollection(): Collection {
-  return <any>{
+  return {
     count: async () => 3,
     aggregate: () => ({
       toArray: async () => [{
@@ -26,6 +27,9 @@ export function createCollection(): Collection {
     findOne: async () => ({}),
     updateOne: async () => ({
       modifiedCount: 0,
+    }),
+    insertOne: async () => ({
+      insertedId: new ObjectID('01'.repeat(12)),
     }),
   };
 }

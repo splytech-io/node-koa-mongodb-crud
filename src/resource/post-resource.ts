@@ -13,7 +13,7 @@ export namespace PostResource {
 
   export interface Options {
     validation: Schema;
-    additionalValidation?: (request: Request) => void;
+    preProcess?: (request: Request) => void;
     documentFormatter?: (request: Request) => object;
     cast: { [key: string]: any };
   }
@@ -26,18 +26,18 @@ export namespace PostResource {
    */
   export function create(collection: Collection, options: Options): Middleware {
     const validation: RequestValidation.Rules = {
-      body: <any>options.validation,
+      body: options.validation,
     };
 
     return async (ctx: Context) => {
       const request = MyRequestValidation.validate<Request>(ctx, validation);
 
-      if (options.additionalValidation) {
-        options.additionalValidation(request);
-      }
-
       // request.body is used in options.documentFormatter()
       request.body = castDocument(request.body, options.cast);
+
+      if (options.preProcess) {
+        options.preProcess(request);
+      }
 
       const doc = options.documentFormatter
         ? options.documentFormatter(request)
@@ -48,7 +48,8 @@ export namespace PostResource {
           updated: new Date(),
         };
 
-      const result = await collection.insertOne(doc).catch(ResourceHelpers.handleDuplicateRecordError);
+      const result = await collection.insertOne(doc)
+        .catch(ResourceHelpers.handleDuplicateRecordError);
 
       ctx.status = 201;
       ctx.body = {

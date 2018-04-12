@@ -35,7 +35,7 @@ export namespace PutResource {
       params: J.object({
         id: J.objectId(),
       }),
-      body: <any>options.validation,
+      body: options.validation,
     };
 
     return async (ctx: Context) => {

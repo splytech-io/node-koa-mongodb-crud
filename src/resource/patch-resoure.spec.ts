@@ -1,4 +1,3 @@
-import { RequestValidation } from '@splytech-io/request-validation';
 import { expect, use } from 'chai';
 import { J } from '../joi';
 import { ResourceError } from '../resource-error';
@@ -27,7 +26,7 @@ describe('patch-resource', () => {
     const ctx = createContext();
 
     await expect(middleware(ctx))
-      .to.eventually.be.rejectedWith(RequestValidation.Error);
+      .to.eventually.be.rejectedWith(ResourceError.VALIDATION_FAILURE);
   });
   it('should succeed', async () => {
     const collection = createCollection();

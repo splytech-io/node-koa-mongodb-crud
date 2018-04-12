@@ -1,4 +1,3 @@
-import { RequestValidation } from '@splytech-io/request-validation';
 import { expect, use } from 'chai';
 import { ResourceError } from '../resource-error';
 import { createCollection, createContext } from '../test-helpers';
@@ -21,7 +20,7 @@ describe('delete-resource', () => {
     const ctx = createContext();
 
     await expect(middleware(ctx))
-      .to.eventually.be.rejectedWith(RequestValidation.Error);
+      .to.eventually.be.rejectedWith(ResourceError.VALIDATION_FAILURE);
   });
   it('should succeed', async () => {
     const collection = createCollection();
