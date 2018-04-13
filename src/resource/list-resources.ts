@@ -5,6 +5,8 @@ import { Collection, Context, Middleware } from '../types';
 export namespace ListResources {
   export interface Options {
     cast: object;
+    preProcess?: (options: ListRecordsEndpointHelper.Options) => void;
+    postProcess?: <T>(result: ListRecordsEndpointHelper.Result<T>) => void;
   }
 
   /**
@@ -20,14 +22,24 @@ export namespace ListResources {
         ListRecordsEndpointHelper.validation,
       );
 
-      const result = await ListRecordsEndpointHelper.exec(collection, {
+      const listRecordsOptions = {
         filter: query.filter,
         fields: query.fields,
         sort: query.sort,
         offset: query.offset,
         limit: query.limit,
         cast: options.cast,
-      });
+      };
+
+      if (options.preProcess) {
+        options.preProcess(listRecordsOptions);
+      }
+
+      const result = await ListRecordsEndpointHelper.exec(collection, listRecordsOptions);
+
+      if (options.postProcess) {
+        options.postProcess(result);
+      }
 
       ctx.body = {
         items: result.records,
