@@ -26,7 +26,7 @@ export function createCollection(): Collection {
     deleteOne: async () => ({ deletedCount: 1 }),
     findOne: async () => ({}),
     updateOne: async () => ({
-      modifiedCount: 0,
+      matchedCount: 0,
     }),
     insertOne: async () => ({
       insertedId: new ObjectID('01'.repeat(12)),

@@ -60,7 +60,7 @@ export namespace PatchResource {
         },
       }).catch(ResourceHelpers.handleDuplicateRecordError);
 
-      if (!result.modifiedCount) {
+      if (!result.matchedCount) {
         throw new ResourceError.NOT_FOUND();
       }
 

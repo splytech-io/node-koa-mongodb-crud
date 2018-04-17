@@ -14,8 +14,8 @@ export interface Collection {
     insertedId: ObjectID;
   }>;
   updateOne: (filter: any, update: any) => Promise<{
-    modifiedCount: number;
-    // matchedCount: number;
+    // modifiedCount: number;
+    matchedCount: number;
   }>;
 }
 

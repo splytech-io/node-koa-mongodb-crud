@@ -31,7 +31,7 @@ describe('patch-resource', () => {
   it('should succeed', async () => {
     const collection = createCollection();
     const updateOneStub = sandbox.stub(collection, 'updateOne').returns(Promise.resolve({
-      modifiedCount: 1,
+      matchedCount: 1,
     }));
     const middleware = PatchResource.create(collection, {
       validation,
@@ -51,7 +51,7 @@ describe('patch-resource', () => {
   it('should throw NOT_FOUND', async () => {
     const collection = createCollection();
     const updateOneStub = sandbox.stub(collection, 'updateOne').returns(Promise.resolve({
-      modifiedCount: 0,
+      matchedCount: 0,
     }));
     const middleware = PatchResource.create(collection, {
       validation,
