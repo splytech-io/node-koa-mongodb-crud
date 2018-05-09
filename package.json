@@ -1,6 +1,6 @@
 {
   "name": "@splytech-io/koa-mongodb-crud",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Koa MongoDB CRUD",
   "main": "build/index.js",
   "typings": "build/index.d.ts",
@@ -10,7 +10,7 @@
     "lint:fix": "tslint --project . --fix",
     "build": "tsc",
     "prepush": "npm run lint",
-    "prepublish": "npm run lint && npm run test && npm run build"
+    "prepublishOnly": "npm run lint && npm run test && npm run build"
   },
   "keywords": [
     "mongodb",
@@ -18,7 +18,7 @@
     "crud"
   ],
   "author": "Andrius Skerla",
-  "license": "ISC",
+  "license": "Apache-2.0",
   "dependencies": {
     "@splytech-io/cast": "0.0.1",
     "@splytech-io/request-validation": "^0.1.2",
