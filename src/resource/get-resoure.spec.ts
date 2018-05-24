@@ -8,7 +8,7 @@ import sinon = require('sinon');
 use(chaiAsPromised);
 
 describe('get-resource', () => {
-  const sandbox = sinon.sandbox.create();
+  const sandbox = sinon.createSandbox();
 
   afterEach(() => {
     sandbox.restore();

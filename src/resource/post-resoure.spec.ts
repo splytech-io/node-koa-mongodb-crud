@@ -9,7 +9,7 @@ import sinon = require('sinon');
 use(chaiAsPromised);
 
 describe('post-resource', () => {
-  const sandbox = sinon.sandbox.create();
+  const sandbox = sinon.createSandbox();
   const validation = J.object({
     name: J.string(),
   });

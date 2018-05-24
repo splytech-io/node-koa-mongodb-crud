@@ -7,7 +7,7 @@ import sinon = require('sinon');
 use(chaiAsPromised);
 
 describe('list-resources', () => {
-  const sandbox = sinon.sandbox.create();
+  const sandbox = sinon.createSandbox();
   const cast = {};
 
   afterEach(() => {

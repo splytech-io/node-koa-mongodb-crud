@@ -1,5 +1,3 @@
-import { isNull } from 'util';
-
 export namespace ResourceError {
 
   /**
@@ -71,7 +69,7 @@ export namespace ResourceError {
    * @returns {boolean}
    */
   export function isError(e: any): boolean {
-    if (typeof e !== 'object' || isNull(e)) {
+    if (typeof e !== 'object' || e === null) {
       return false;
     }
 
