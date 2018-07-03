@@ -10,7 +10,8 @@ use(chaiAsPromised);
 describe('aggregate-resource', () => {
   const sandbox = sinon.createSandbox();
   const cast = {
-    _id: ObjectID,
+    '_id': ObjectID,
+    'references.some_id': ObjectID,
   };
 
   afterEach(() => {
@@ -34,7 +35,8 @@ describe('aggregate-resource', () => {
       query: {
         pipeline: JSON.stringify([{
           $match: {
-            _id: '123456781234567812345678',
+            '_id': '123456781234567812345678',
+            'references.some_id': '123456781234567812345678',
           },
         }]),
       },
@@ -45,7 +47,10 @@ describe('aggregate-resource', () => {
     expect(ctx.status).to.equals(200);
     expect((<any>ctx).result.res).to.equals('[{"_id":"one"},{"_id":"two"}]');
     expect(aggregateStub.getCall(0).args[0]).to.deep.equals([{
-      '$match': { _id: new ObjectID('123456781234567812345678') },
+      '$match': {
+        '_id': new ObjectID('123456781234567812345678'),
+        'references.some_id': new ObjectID('123456781234567812345678'),
+      },
     }]);
   });
 });

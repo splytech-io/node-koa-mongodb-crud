@@ -1,4 +1,4 @@
-import { castDocument } from '@splytech-io/cast';
+import { castFilter } from '@splytech-io/cast';
 import { RequestValidation } from '@splytech-io/request-validation';
 import * as J from 'joi';
 import { MyRequestValidation } from '../request-validation';
@@ -40,7 +40,7 @@ export namespace AggregateResource {
         }
 
         if (item.$match) {
-          item.$match = castDocument(item.$match, options.cast);
+          item.$match = castFilter(item.$match, options.cast);
         }
 
         return item;
