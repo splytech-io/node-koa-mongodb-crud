@@ -5,3 +5,4 @@ export * from './resource/list-resources';
 export * from './resource/patch-resource';
 export * from './resource/post-resource';
 export * from './resource/put-resource';
+export * from './resource/aggregate-resource';

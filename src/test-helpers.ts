@@ -22,6 +22,8 @@ export function createCollection(): Collection {
       }, {
         _id: 3,
       }],
+      next: async () => {
+      },
     }),
     deleteOne: async () => ({ deletedCount: 1 }),
     findOne: async () => ({}),
@@ -40,7 +42,13 @@ export function createCollection(): Collection {
  * @returns {Context}
  */
 export function createContext(options: ContextOptions = {}): Context {
+  const headers: any = {};
+  const result = {
+    res: '',
+  };
+
   return {
+    ...(<any>{ result }),
     params: {
       ...options.params,
     },
@@ -51,6 +59,11 @@ export function createContext(options: ContextOptions = {}): Context {
       body: {
         ...options.body,
       },
+    },
+    set: (key: string, value: string) => headers[key] = value,
+    res: {
+      write: (chunk) => result.res += chunk,
+      end: (chunk) => chunk && (result.res += chunk),
     },
   };
 }
