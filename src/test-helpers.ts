@@ -13,7 +13,7 @@ export interface ContextOptions {
  */
 export function createCollection(): Collection {
   return {
-    count: async () => 3,
+    countDocuments: async () => 3,
     aggregate: () => ({
       toArray: async () => [{
         _id: 1,

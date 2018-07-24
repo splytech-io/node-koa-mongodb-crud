@@ -172,7 +172,7 @@ export namespace ListRecordsEndpointHelper {
    */
   export async function exec<T>(collection: Collection, options: Options): Promise<Result<T>> {
     const { filter, pipeline } = parseOptions(options);
-    const countPromise = collection.count(filter);
+    const countPromise = collection.countDocuments(filter);
     const recordsPromise = collection.aggregate(pipeline).toArray();
 
     const [count, records] = await Promise.all([countPromise, recordsPromise]);
