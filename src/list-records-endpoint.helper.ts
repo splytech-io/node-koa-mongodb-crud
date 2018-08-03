@@ -146,7 +146,7 @@ export namespace ListRecordsEndpointHelper {
    */
   function processProject(pipeline: any[], fields?: string, project?: object, getFieldPath?: Function) {
     const result: { [key: string]: any } = {
-      '_id': 1,
+      // '_id': 1,
     };
 
     if (fields) {
@@ -159,6 +159,10 @@ export namespace ListRecordsEndpointHelper {
 
     if (project) {
       Object.assign(result, project);
+    }
+
+    if (Object.keys(result).length === 0) {
+      return;
     }
 
     pipeline.push({ $project: result });

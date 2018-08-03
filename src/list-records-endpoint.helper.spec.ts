@@ -9,11 +9,7 @@ describe('list-records-endpoint.helper', () => {
       const { filter, pipeline } = ListRecordsEndpointHelper.parseOptions({});
 
       expect(filter).to.deep.equals({});
-      expect(pipeline).to.deep.equals([
-        {
-          $project: { '_id': 1 },
-        },
-      ]);
+      expect(pipeline).to.deep.equals([]);
     });
     it('should parse custom filter options', () => {
       const { filter, pipeline } = ListRecordsEndpointHelper.parseOptions({
@@ -30,8 +26,6 @@ describe('list-records-endpoint.helper', () => {
           $match: {
             status: 'one',
           },
-        }, {
-          $project: { '_id': 1 },
         },
       ]);
     });
@@ -53,8 +47,6 @@ describe('list-records-endpoint.helper', () => {
           $match: {
             status: 'two',
           },
-        }, {
-          $project: { '_id': 1 },
         },
       ]);
     });
@@ -73,8 +65,6 @@ describe('list-records-endpoint.helper', () => {
           $match: {
             status: 'two',
           },
-        }, {
-          $project: { '_id': 1 },
         },
       ]);
     });
@@ -91,8 +81,6 @@ describe('list-records-endpoint.helper', () => {
             two: -1,
             three: 1,
           },
-        }, {
-          $project: { '_id': 1 },
         },
       ]);
     });
@@ -105,8 +93,6 @@ describe('list-records-endpoint.helper', () => {
       expect(pipeline).to.deep.equals([
         {
           $skip: 3,
-        }, {
-          $project: { '_id': 1 },
         },
       ]);
     });
@@ -119,8 +105,6 @@ describe('list-records-endpoint.helper', () => {
       expect(pipeline).to.deep.equals([
         {
           $limit: 3,
-        }, {
-          $project: { '_id': 1 },
         },
       ]);
     });
@@ -133,7 +117,6 @@ describe('list-records-endpoint.helper', () => {
       expect(pipeline).to.deep.equals([
         {
           $project: {
-            '_id': 1,
             'name': '$name',
             'surname': '$surname',
           },
@@ -149,7 +132,6 @@ describe('list-records-endpoint.helper', () => {
       expect(pipeline).to.deep.equals([
         {
           $project: {
-            '_id': 1,
             'name': 1,
           },
         },
