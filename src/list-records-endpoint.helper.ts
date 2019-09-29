@@ -172,7 +172,8 @@ export namespace ListRecordsEndpointHelper {
    */
   export async function exec<T>(collection: Collection, options: Options): Promise<Result<T>> {
     const { filter, pipeline } = parseOptions(options);
-    const countPromise = collection.countDocuments(filter);
+    const countHint = (Object.keys(filter || {}).length === 0) ? '_id_' : undefined;
+    const countPromise = collection.countDocuments(filter, { hint: countHint });
     const recordsPromise = collection.aggregate(pipeline).toArray();
 
     const [count, records] = await Promise.all([countPromise, recordsPromise]);
