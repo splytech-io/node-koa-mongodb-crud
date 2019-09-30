@@ -166,7 +166,6 @@ describe('list-records-endpoint.helper', () => {
         cast: { date: Date },
       });
 
-      expect(result.count).to.equals(3);
       expect(result.records.length).to.equals(3);
       expect(result.filter).to.deep.equals({
         date: new Date('2017'),

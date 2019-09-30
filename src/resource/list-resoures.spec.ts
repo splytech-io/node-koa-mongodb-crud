@@ -16,7 +16,6 @@ describe('list-resources', () => {
 
   it('should succeed', async () => {
     const collection = createCollection();
-    sandbox.stub(collection, 'countDocuments').returns(1);
     sandbox.stub(collection, 'aggregate').returns({
       toArray: async () => ([{
         _id: 1,
@@ -37,9 +36,112 @@ describe('list-resources', () => {
       items: [{
         _id: 1,
       }],
-      total_count: 1,
+      hasNext: false,
       offset: 0,
       limit: 20,
+    });
+  });
+  it('should succeed with more results available', async () => {
+    const collection = createCollection();
+    sandbox.stub(collection, 'aggregate').returns({
+      toArray: async () => ([{
+        _id: 1,
+      }, {
+        _id: 1,
+      }, {
+        _id: 1,
+      }, {
+        _id: 1,
+      }, {
+        _id: 1,
+      }]),
+    });
+    const middleware = ListResources.create(collection, {
+      cast: cast,
+    });
+    const ctx = createContext({
+      params: {
+        id: '0'.repeat(24),
+      },
+      query: {
+        limit: 4,
+      },
+    });
+
+    await middleware(ctx);
+
+    expect(ctx.body).to.deep.equals({
+      items: [{ _id: 1 }, { _id: 1 }, { _id: 1 }, { _id: 1 }],
+      hasNext: true,
+      offset: 0,
+      limit: 4,
+    });
+  });
+  it('should succeed with no more results available on first page', async () => {
+    const collection = createCollection();
+    sandbox.stub(collection, 'aggregate').returns({
+      toArray: async () => ([{
+        _id: 1,
+      }, {
+        _id: 1,
+      }, {
+        _id: 1,
+      }, {
+        _id: 1,
+      }, {
+        _id: 1,
+      }]),
+    });
+    const middleware = ListResources.create(collection, {
+      cast: cast,
+    });
+    const ctx = createContext({
+      params: {
+        id: '0'.repeat(24),
+      },
+      query: {
+        limit: 5,
+      },
+    });
+
+    await middleware(ctx);
+
+    expect(ctx.body).to.deep.equals({
+      items: [{ _id: 1 }, { _id: 1 }, { _id: 1 }, { _id: 1 }, { _id: 1 }],
+      hasNext: false,
+      offset: 0,
+      limit: 5,
+    });
+  });
+  it('should succeed with no more results available on subsequent page', async () => {
+    const collection = createCollection();
+    sandbox.stub(collection, 'aggregate').returns({
+      toArray: async () => ([ {
+        _id: 1,
+      }, {
+        _id: 1,
+      }]),
+    });
+    const middleware = ListResources.create(collection, {
+      cast: cast,
+    });
+    const ctx = createContext({
+      params: {
+        id: '0'.repeat(24),
+      },
+      query: {
+        limit: 2,
+        offset: 3,
+      },
+    });
+
+    await middleware(ctx);
+
+    expect(ctx.body).to.deep.equals({
+      items: [{ _id: 1 }, { _id: 1 }],
+      hasNext: false,
+      offset: 3,
+      limit: 2,
     });
   });
   it('should preProcess options', async () => {
@@ -72,7 +174,7 @@ describe('list-resources', () => {
       items: [{
         _id: 1,
       }],
-      total_count: 1,
+      hasNext: false,
       offset: 0,
       limit: 20,
     });
@@ -112,7 +214,7 @@ describe('list-resources', () => {
       items: [{
         _id: 1,
       }],
-      total_count: 1,
+      hasNext: false,
       offset: 0,
       limit: 20,
     });

@@ -22,12 +22,14 @@ export namespace ListResources {
         ListRecordsEndpointHelper.validation,
       );
 
+      const limit = query.limit;
+
       const listRecordsOptions = {
         filter: query.filter,
         fields: query.fields,
         sort: query.sort,
         offset: query.offset,
-        limit: query.limit,
+        limit: limit + 1,
         cast: options.cast,
       };
 
@@ -36,14 +38,15 @@ export namespace ListResources {
       }
 
       const result = await ListRecordsEndpointHelper.exec(collection, listRecordsOptions);
+      const hasNext = (result.records.length > limit);
 
       if (options.postProcess) {
         options.postProcess(result);
       }
 
       ctx.body = {
-        items: result.records,
-        total_count: result.count,
+        items: result.records.slice(0, limit),
+        hasNext: hasNext,
         limit: query.limit,
         offset: query.offset,
       };
