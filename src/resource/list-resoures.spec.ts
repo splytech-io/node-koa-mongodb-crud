@@ -36,7 +36,7 @@ describe('list-resources', () => {
       items: [{
         _id: 1,
       }],
-      hasNext: false,
+      has_next: false,
       offset: 0,
       limit: 20,
     });
@@ -72,7 +72,7 @@ describe('list-resources', () => {
 
     expect(ctx.body).to.deep.equals({
       items: [{ _id: 1 }, { _id: 1 }, { _id: 1 }, { _id: 1 }],
-      hasNext: true,
+      has_next: true,
       offset: 0,
       limit: 4,
     });
@@ -108,7 +108,7 @@ describe('list-resources', () => {
 
     expect(ctx.body).to.deep.equals({
       items: [{ _id: 1 }, { _id: 1 }, { _id: 1 }, { _id: 1 }, { _id: 1 }],
-      hasNext: false,
+      has_next: false,
       offset: 0,
       limit: 5,
     });
@@ -139,7 +139,7 @@ describe('list-resources', () => {
 
     expect(ctx.body).to.deep.equals({
       items: [{ _id: 1 }, { _id: 1 }],
-      hasNext: false,
+      has_next: false,
       offset: 3,
       limit: 2,
     });
@@ -174,7 +174,7 @@ describe('list-resources', () => {
       items: [{
         _id: 1,
       }],
-      hasNext: false,
+      has_next: false,
       offset: 0,
       limit: 20,
     });
@@ -214,7 +214,7 @@ describe('list-resources', () => {
       items: [{
         _id: 1,
       }],
-      hasNext: false,
+      has_next: false,
       offset: 0,
       limit: 20,
     });
