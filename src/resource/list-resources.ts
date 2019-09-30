@@ -46,7 +46,7 @@ export namespace ListResources {
 
       ctx.body = {
         items: result.records.slice(0, limit),
-        hasNext: hasNext,
+        has_next: hasNext,
         limit: query.limit,
         offset: query.offset,
       };
