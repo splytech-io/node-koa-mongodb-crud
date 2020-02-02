@@ -39,6 +39,10 @@ export namespace AggregateResource {
           throw new Error('lookup is forbidden');
         }
 
+        if (item.$out) {
+          throw new Error('out is forbidden');
+        }
+
         if (item.$match) {
           item.$match = castFilter(item.$match, options.cast);
         }
