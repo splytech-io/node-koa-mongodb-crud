@@ -47,7 +47,7 @@ export namespace PatchResource {
         },
       });
 
-      const body = castFilter(flatten(request.body, {
+      const body = castFilter<object>(flatten(request.body, {
         safe: true,
       }), options.cast);
 

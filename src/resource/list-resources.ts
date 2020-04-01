@@ -7,6 +7,7 @@ export namespace ListResources {
     cast: object;
     preProcess?: (options: ListRecordsEndpointHelper.Options) => void;
     postProcess?: <T>(result: ListRecordsEndpointHelper.Result<T>) => void;
+    readPreference?: 'nearest' | 'secondaryPreferred' | string;
   }
 
   /**
@@ -29,6 +30,7 @@ export namespace ListResources {
         offset: query.offset,
         limit: query.limit,
         cast: options.cast,
+        readPreference: options.readPreference,
       };
 
       if (options.preProcess) {

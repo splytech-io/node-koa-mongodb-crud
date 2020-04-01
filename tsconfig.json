@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
-    "target": "ES2017",
+    "target": "ES2019",
     "module": "commonjs",
-    "lib": ["ES2017"],
+    "lib": ["esnext"],
     "outDir": "build",
     "declaration": true,
     "sourceMap": true,

@@ -13,6 +13,10 @@ export namespace GetResource {
     };
   }
 
+  interface Options {
+    readPreference?: 'nearest' | 'secondaryPreferred' | string;
+  }
+
   const validation: RequestValidation.Rules = {
     params: J.object({
       id: J.objectId(),
@@ -22,14 +26,17 @@ export namespace GetResource {
   /**
    *
    * @param {Collection} collection
+   * @param options
    * @returns {Middleware}
    */
-  export function create(collection: Collection): Middleware {
+  export function create(collection: Collection, options?: Options): Middleware {
     return async (ctx: Context) => {
       const { params } = MyRequestValidation.validate<Request>(ctx, validation);
 
       const record = await collection.findOne({
         '_id': new ObjectID(params.id),
+      }, {
+        readPreference: options?.readPreference,
       });
 
       if (!record) {

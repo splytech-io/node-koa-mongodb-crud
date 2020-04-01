@@ -1,7 +1,7 @@
 import { ObjectID } from 'bson';
 
 export interface Collection {
-  countDocuments: (filter: any) => Promise<number>;
+  countDocuments: (filter: any, options?: any) => Promise<number>;
   aggregate: (pipeline: any, options?: any) => {
     toArray: () => Promise<any>;
     next: () => Promise<any>;
@@ -10,7 +10,7 @@ export interface Collection {
     deletedCount?: number;
   }>;
 
-  findOne: (filter: any) => Promise<any>;
+  findOne: (filter: any, options?: any) => Promise<any>;
   insertOne: (doc: any) => Promise<{
     insertedId: ObjectID;
   }>;

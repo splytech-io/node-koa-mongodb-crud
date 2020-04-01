@@ -15,6 +15,7 @@ export namespace AggregateResource {
   export interface Options {
     cast: { [key: string]: any };
     preProcess?: (pipeline: any[]) => any[];
+    readPreference?: 'nearest' | 'secondaryPreferred' | string;
   }
 
   /**
@@ -55,7 +56,7 @@ export namespace AggregateResource {
       ctx.res.write('[');
 
       const cursor = collection.aggregate(pipelineParsed, {
-        readPreference: 'secondaryPreferred',
+        readPreference: options.readPreference || 'secondaryPreferred',
         allowDiskUse: true,
       });
 

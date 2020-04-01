@@ -26,6 +26,7 @@ export namespace ListRecordsEndpointHelper {
     limit?: number;
     getFieldPath?: (item: string) => string;
     cast?: any;
+    readPreference?: 'nearest' | 'secondaryPreferred' | string;
   }
 
   export interface ParsedOptions {
@@ -176,8 +177,12 @@ export namespace ListRecordsEndpointHelper {
    */
   export async function exec<T>(collection: Collection, options: Options): Promise<Result<T>> {
     const { filter, pipeline } = parseOptions(options);
-    const countPromise = collection.countDocuments(filter);
-    const recordsPromise = collection.aggregate(pipeline).toArray();
+    const countPromise = collection.countDocuments(filter, {
+      readPreference: options.readPreference,
+    });
+    const recordsPromise = collection.aggregate(pipeline, {
+      readPreference: options.readPreference,
+    }).toArray();
 
     const [count, records] = await Promise.all([countPromise, recordsPromise]);
 
