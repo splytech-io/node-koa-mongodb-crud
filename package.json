@@ -1,6 +1,6 @@
 {
   "name": "@splytech-io/koa-mongodb-crud",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "Koa MongoDB CRUD",
   "main": "build/index.js",
   "typings": "build/index.d.ts",
@@ -10,6 +10,7 @@
     "lint:fix": "tslint --project . --fix",
     "build": "tsc",
     "prepush": "npm run lint",
+    "prepare": "install-peers",
     "prepublishOnly": "npm run lint && npm run test && npm run build"
   },
   "keywords": [
@@ -19,6 +20,9 @@
   ],
   "author": "Andrius Skerla",
   "license": "Apache-2.0",
+  "peerDependencies": {
+    "bson": "2.x"
+  },
   "dependencies": {
     "@splytech-io/cast": "^1.1.1",
     "@splytech-io/request-validation": "^0.2.1",
@@ -26,7 +30,7 @@
     "@types/debug": "^4.1.5",
     "@types/joi": "^14.3.4",
     "@types/node": "^13.9.8",
-    "bson": "^4.0.4",
+    "install-peers-cli": "^2.2.0",
     "joi": "^14.3.1"
   },
   "devDependencies": {
