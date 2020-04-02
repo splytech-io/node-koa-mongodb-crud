@@ -14,6 +14,7 @@ export interface ContextOptions {
 export function createCollection(): Collection {
   return {
     countDocuments: async () => 3,
+    count: async () => 3,
     aggregate: () => ({
       toArray: async () => [{
         _id: 1,

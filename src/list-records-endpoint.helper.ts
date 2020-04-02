@@ -177,7 +177,7 @@ export namespace ListRecordsEndpointHelper {
    */
   export async function exec<T>(collection: Collection, options: Options): Promise<Result<T>> {
     const { filter, pipeline } = parseOptions(options);
-    const countPromise = collection.countDocuments(filter, {
+    const countPromise = collection.count(filter, {
       readPreference: options.readPreference,
     });
     const recordsPromise = collection.aggregate(pipeline, {
