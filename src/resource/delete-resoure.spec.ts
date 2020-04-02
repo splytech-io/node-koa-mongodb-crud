@@ -38,7 +38,7 @@ describe('delete-resource', () => {
   it('should throw NOT_FOUND', async () => {
     const collection = createCollection();
 
-    const deleteOneStub = sandbox.stub(collection, 'deleteOne').returns({
+    const deleteOneStub = sandbox.stub(collection, 'deleteOne').returns(<any>{
       deletedCount: 0,
     });
 

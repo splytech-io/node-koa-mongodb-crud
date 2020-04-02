@@ -25,7 +25,7 @@ describe('aggregate-resource', () => {
       _id: 'two',
     }];
     const collection = createCollection();
-    const aggregateStub = sinon.stub(collection, 'aggregate').returns({
+    const aggregateStub = sinon.stub(collection, 'aggregate').returns(<any>{
       next: () => docs.shift(),
     });
     const middleware = AggregateResource.create(collection, {

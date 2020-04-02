@@ -73,7 +73,7 @@ describe('post-resource', () => {
     });
 
     const insertOneStub = sandbox.stub(collection, 'insertOne')
-      .returns(Promise.resolve({}));
+      .returns(Promise.resolve<any>({}));
 
     const middleware = PostResource.create(collection, {
       validation,

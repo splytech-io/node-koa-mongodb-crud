@@ -24,7 +24,7 @@ describe('get-resource', () => {
   });
   it('should succeed', async () => {
     const collection = createCollection();
-    const findOneStub = sandbox.stub(collection, 'findOne').returns({
+    const findOneStub = sandbox.stub(collection, 'findOne').returns(<any>{
       object: true,
     });
     const middleware = GetResource.create(collection);
@@ -43,7 +43,7 @@ describe('get-resource', () => {
   });
   it('should throw NOT_FOUND', async () => {
     const collection = createCollection();
-    const findOneStub = sandbox.stub(collection, 'findOne').returns(null);
+    const findOneStub = sandbox.stub(collection, 'findOne').returns(null as any);
     const middleware = GetResource.create(collection);
     const ctx = createContext({
       params: {
