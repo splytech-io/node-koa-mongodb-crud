@@ -1,12 +1,12 @@
 import { castDocument } from '@splytech-io/cast';
 import { RequestValidation } from '@splytech-io/request-validation';
 import { ObjectID } from 'bson';
-import { Schema } from 'joi';
 import { ResourceHelpers } from '../helpers';
 import { J } from '../joi';
 import { MyRequestValidation } from '../request-validation';
 import { ResourceError } from '../resource-error';
 import { Collection, Context, Middleware } from '../types';
+import { Validator } from '../interfaces';
 
 export namespace PutResource {
 
@@ -20,7 +20,7 @@ export namespace PutResource {
   }
 
   export interface Options {
-    validation: Schema;
+    validation: Validator;
     cast: { [key: string]: any };
   }
 
@@ -35,7 +35,7 @@ export namespace PutResource {
       params: J.object({
         id: J.objectId(),
       }),
-      body: options.validation,
+      body: options.validation as any,
     };
 
     return async (ctx: Context) => {

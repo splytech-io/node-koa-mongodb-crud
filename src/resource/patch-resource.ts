@@ -1,12 +1,12 @@
 import { castFilter } from '@splytech-io/cast';
 import { RequestValidation } from '@splytech-io/request-validation';
 import { ObjectID } from 'bson';
-import { Schema } from 'joi';
 import { ResourceHelpers } from '../helpers';
 import { J } from '../joi';
 import { MyRequestValidation } from '../request-validation';
 import { ResourceError } from '../resource-error';
 import { Collection, Context, Middleware } from '../types';
+import { Validator } from '../interfaces';
 import flatten = require('flat');
 
 export namespace PatchResource {
@@ -20,7 +20,7 @@ export namespace PatchResource {
 
   export interface Options {
     cast: { [key: string]: any };
-    validation: Schema;
+    validation: Validator;
   }
 
   /**
@@ -34,7 +34,7 @@ export namespace PatchResource {
       params: J.object({
         id: J.objectId(),
       }),
-      body: options.validation,
+      body: options.validation as any,
     };
 
     /**

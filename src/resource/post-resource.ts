@@ -1,10 +1,10 @@
 import { castDocument } from '@splytech-io/cast';
 import { RequestValidation } from '@splytech-io/request-validation';
 import { ObjectID } from 'bson';
-import { Schema } from 'joi';
 import { ResourceHelpers } from '../helpers';
 import { MyRequestValidation } from '../request-validation';
 import { Collection, Context, Middleware } from '../types';
+import { Validator } from '../interfaces';
 
 export namespace PostResource {
   export interface Request {
@@ -12,7 +12,7 @@ export namespace PostResource {
   }
 
   export interface Options {
-    validation: Schema;
+    validation: Validator;
     preProcess?: (request: Request) => void;
     documentFormatter?: (request: Request) => object;
     cast: { [key: string]: any };
@@ -26,7 +26,7 @@ export namespace PostResource {
    */
   export function create(collection: Collection, options: Options): Middleware {
     const validation: RequestValidation.Rules = {
-      body: options.validation,
+      body: options.validation as any,
     };
 
     return async (ctx: Context) => {
