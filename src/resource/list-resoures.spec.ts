@@ -16,7 +16,6 @@ describe('list-resources', () => {
 
   it('should succeed', async () => {
     const collection = createCollection();
-    sandbox.stub(collection, 'estimatedDocumentCount').returns(Promise.resolve(1));
     sandbox.stub(collection, 'countDocuments').returns(Promise.resolve(1));
     sandbox.stub(collection, 'aggregate').returns(<any>{
       toArray: async () => ([{
@@ -45,7 +44,6 @@ describe('list-resources', () => {
   });
   it('should preProcess options', async () => {
     const collection = createCollection();
-    sandbox.stub(collection, 'estimatedDocumentCount').returns(Promise.resolve(1));
     sandbox.stub(collection, 'countDocuments').returns(Promise.resolve(1));
     const aggregateStub = sandbox.stub(collection, 'aggregate').returns(<any>{
       toArray: async () => ([{
@@ -82,7 +80,6 @@ describe('list-resources', () => {
   it('should postProcess result', async () => {
     const collection = createCollection();
     sandbox.stub(collection, 'countDocuments').returns(Promise.resolve(1));
-    sandbox.stub(collection, 'estimatedDocumentCount').returns(Promise.resolve(1));
     const aggregateStub = sandbox.stub(collection, 'aggregate').returns(<any>{
       toArray: async () => ([{
         _id: 1,

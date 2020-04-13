@@ -1,6 +1,6 @@
 {
   "name": "@splytech-io/koa-mongodb-crud",
-  "version": "2.1.4",
+  "version": "2.1.5",
   "description": "Koa MongoDB CRUD",
   "main": "build/index.js",
   "typings": "build/index.d.ts",
