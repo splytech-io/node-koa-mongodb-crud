@@ -1,6 +1,4 @@
-import { ObjectID } from 'bson';
-
-export interface Collection {
+export interface Collection<ObjectID = any> {
   estimatedDocumentCount: (filter: any, options?: any) => Promise<number>;
   countDocuments: (filter: any, options?: any) => Promise<number>;
   aggregate: (pipeline: any, options?: any) => {

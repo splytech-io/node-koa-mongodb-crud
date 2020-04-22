@@ -154,7 +154,7 @@ export namespace ListRecordsEndpointHelper {
       fields.split(',').forEach((item: string) => {
         const value = getFieldPath ? getFieldPath(item) : item;
 
-        result[item] = `$${value}`;
+        result[item] = `$${ value }`;
       });
     }
 
@@ -175,7 +175,10 @@ export namespace ListRecordsEndpointHelper {
    * @param {ListRecordsEndpointHelper.Options} options
    * @returns {Promise<ListRecordsEndpointHelper.Result<T>>}
    */
-  export async function exec<T>(collection: Collection, options: Options): Promise<Result<T>> {
+  export async function exec<T, ObjectID = any>(
+    collection: Collection<ObjectID>,
+    options: Options,
+  ): Promise<Result<T>> {
     const { filter, pipeline } = parseOptions(options);
     const countPromise = collection.countDocuments(filter, {
       readPreference: options.readPreference,
