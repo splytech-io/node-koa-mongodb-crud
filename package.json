@@ -20,6 +20,9 @@
   ],
   "author": "Andrius Skerla",
   "license": "Apache-2.0",
+  "peerDependencies": {
+    "bson": "1.x"
+  },
   "dependencies": {
     "@splytech-io/cast": "^1.1.2",
     "@splytech-io/request-validation": "^0.2.1",
@@ -27,7 +30,7 @@
     "joi": "^14.3.1"
   },
   "devDependencies": {
-    "bson": "2.x",
+    "bson": "1.x",
     "@types/bson": "^4.0.2",
     "@types/chai": "^4.2.11",
     "@types/chai-as-promised": "^7.1.2",
